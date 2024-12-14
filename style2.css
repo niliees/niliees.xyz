@@ -64,7 +64,7 @@ body::after {
     background-image: repeating-linear-gradient(0deg,
         transparent 0px,
         transparent 2px,
-        rgba(0, 255, 0, 0.1) 3px,
+        rgba(176, 136, 249, 0.1) 3px, /* Änderung von rgba(0, 255, 0, 0.1) zu rgba(176, 136, 249, 0.1) */
         transparent 4px
     );
     pointer-events: none;

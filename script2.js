@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
         ctx.fillRect(0, 0, width, height);
         
-        ctx.fillStyle = '#0f0';
+        ctx.fillStyle = '#b088f9'; // Änderung von '#0f0' zu '#b088f9'
         ctx.font = '15pt monospace';
         
         ypos.forEach((y, ind) => {
