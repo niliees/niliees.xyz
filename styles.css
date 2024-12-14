@@ -478,7 +478,7 @@ contact-info li {
     bottom: 0;
     width: 100%;
     background: var(--text-bg);
-    border-top: 1px solid var(--cyber-blue);
+    border-top: 1px solid var(--matrix-green);
     padding: 1rem;
     text-align: center;
     box-shadow: 0 0 20px var(--text-glow);
@@ -501,15 +501,15 @@ contact-info li {
 
 .code-submit {
     background: transparent;
-    color: var(--cyber-blue);
-    border: 1px solid var(--cyber-blue);
+    color: var(--matrix-green);
+    border: 1px solid var(--matrix-green);
     padding: 0.5rem 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .code-submit:hover {
-    background: var(--cyber-blue);
+    background: var(--matrix-green);
     color: var(--dark-bg);
-    box-shadow: 0 0 15px var(--cyber-blue);
+    box-shadow: 0 0 15px var(--matrix-green);
 }
