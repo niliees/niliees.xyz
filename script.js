@@ -60,11 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
             switch(code) {
                 case '#0001':
                     document.querySelector('link[rel="stylesheet"]').href = 'styles.css';
-                    document.querySelector('link[rel="script"]').href = 'script.js';
                     break;
                 case '#0002':
                     document.querySelector('link[rel="stylesheet"]').href = 'style2.css';
-                    document.querySelector('link[rel="script"]').href = 'script2.js';
                     break;
                 default:
                     alert('Invalid code!');

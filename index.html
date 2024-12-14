@@ -46,7 +46,20 @@
             <button class="code-submit">Apply Style</button>
         </div>
     </footer>
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const styleSheet = document.querySelector('link[rel="stylesheet"]').href;
+            if (styleSheet.includes('style2.css')) {
+                const script2 = document.createElement('script');
+                script2.src = 'script2.js';
+                document.head.appendChild(script2);
+            } else {
+                const script = document.createElement('script');
+                script.src = 'script.js';
+                document.head.appendChild(script);
+            }
+        });
+    </script>
 </body>
 </html>
 

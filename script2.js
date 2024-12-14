@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Matrix rain effect
+    // Matrix rain effect mit lila Farbe
     const canvas = document.createElement('canvas');
     canvas.id = 'matrix-bg';
     document.body.prepend(canvas);
@@ -21,14 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const cols = Math.floor(width / 20);
     const ypos = Array(cols).fill(0);
 
-    ctx.fillStyle = '#000';
+    ctx.fillStyle = '#0a0015'; // Dunklerer Hintergrund
     ctx.fillRect(0, 0, width, height);
 
     function matrix() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillStyle = 'rgba(10, 0, 21, 0.05)'; // Dunklerer Fade-Effekt
         ctx.fillRect(0, 0, width, height);
         
-        ctx.fillStyle = '#b088f9'; // Änderung von '#0f0' zu '#b088f9'
+        ctx.fillStyle = '#b088f9'; // Lila Farbe für Matrix-Regen
         ctx.font = '15pt monospace';
         
         ypos.forEach((y, ind) => {
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', () => {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
-        ctx.fillStyle = '#000';
+        ctx.fillStyle = '#0a0015';
         ctx.fillRect(0, 0, width, height);
     });
 
@@ -60,11 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
             switch(code) {
                 case '#0001':
                     document.querySelector('link[rel="stylesheet"]').href = 'styles.css';
-                    document.querySelector('link[rel="script"]').href = 'script.js';
+                    location.reload();
                     break;
                 case '#0002':
                     document.querySelector('link[rel="stylesheet"]').href = 'style2.css';
-                    document.querySelector('link[rel="script"]').href = 'script2.js';
                     break;
                 default:
                     alert('Invalid code!');
