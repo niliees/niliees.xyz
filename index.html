@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meine Website</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js" id="matrix-script"></script>
 </head>
 <body>
     <!-- Matrix background will be inserted here by JavaScript -->
@@ -48,15 +49,36 @@
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const styleSheet = document.querySelector('link[rel="stylesheet"]').href;
-            if (styleSheet.includes('style2.css')) {
-                const script2 = document.createElement('script');
-                script2.src = 'script2.js';
-                document.head.appendChild(script2);
-            } else {
-                const script = document.createElement('script');
-                script.src = 'script.js';
-                document.head.appendChild(script);
+            const styleSheet = document.querySelector('link[rel="stylesheet"]');
+            const matrixScript = document.querySelector('#matrix-script');
+            
+            if (localStorage.getItem('activeStyle') === 'style2') {
+                styleSheet.href = 'style2.css';
+                matrixScript.src = 'script2.js';
+            }
+            
+            const codeSubmit = document.querySelector('.code-submit');
+            if (codeSubmit) {
+                codeSubmit.addEventListener('click', () => {
+                    const code = document.querySelector('.code-input').value.trim();
+                    
+                    switch(code) {
+                        case '#0001':
+                            styleSheet.href = 'styles.css';
+                            matrixScript.src = 'script.js';
+                            localStorage.setItem('activeStyle', 'style1');
+                            location.reload();
+                            break;
+                        case '#0002':
+                            styleSheet.href = 'style2.css';
+                            matrixScript.src = 'script2.js';
+                            localStorage.setItem('activeStyle', 'style2');
+                            location.reload();
+                            break;
+                        default:
+                            alert('Invalid code!');
+                    }
+                });
             }
         });
     </script>
