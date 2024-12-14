@@ -48,4 +48,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     setInterval(matrix, 50);
+
+    // Style switcher
+    const codeInput = document.querySelector('.code-input');
+    const codeSubmit = document.querySelector('.code-submit');
+
+    if (codeSubmit) {
+        codeSubmit.addEventListener('click', () => {
+            const code = codeInput.value.trim();
+            
+            switch(code) {
+                case '#0001':
+                    document.querySelector('link[rel="stylesheet"]').href = 'styles.css';
+                    break;
+                case '#0002':
+                    document.querySelector('link[rel="stylesheet"]').href = 'style2.css';
+                    break;
+                default:
+                    alert('Invalid code!');
+            }
+        });
+    }
 });

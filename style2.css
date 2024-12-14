@@ -5,16 +5,16 @@
 }
 
 :root {
-    --matrix-green: #0f0;
-    --dark-green: #003300;
-    --glow-green: #00ff00;
-    --dark-bg: #000000;
-    --cyber-blue: #00ffff;
-    --neon-purple: #ff00ff;
-    --bright-yellow: #ffff00;
+    --matrix-green: #b088f9;
+    --dark-green: #2a0066;
+    --glow-green: #9966ff;
+    --dark-bg: #0a0015;
+    --cyber-blue: #cc99ff;
+    --neon-purple: #bf00ff;
+    --bright-yellow: #e6ccff;
     --terminal-white: #e0e0e0;
-    --text-bg: rgba(0, 10, 0, 0.85);
-    --text-glow: rgba(0, 255, 255, 0.2);
+    --text-bg: rgba(20, 0, 30, 0.85);
+    --text-glow: rgba(153, 51, 255, 0.2);
 }
 
 /* Matrix rain canvas styles */
