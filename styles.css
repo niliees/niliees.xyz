@@ -385,14 +385,14 @@ contact-info li {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;  /* reduced from 2rem to 1rem for tighter spacing */
     margin-top: 2rem;
 }
 
 .project-card {
     background: var(--text-bg);
-    padding: 2rem;
+    padding: 1.5rem;  /* reduced from 2rem */
     border-radius: 8px;
     box-shadow: 0 0 20px var(--text-glow);
     backdrop-filter: blur(10px);
