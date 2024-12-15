@@ -130,7 +130,7 @@ nav ul li a.active {
 
 main {
     padding: 2rem;
-    max-width: 800px;
+    max-width: 1200px;  /* erhöht von 800px */
     margin: 0 auto;
     color: var(--cyber-blue);
 }
@@ -385,8 +385,8 @@ contact-info li {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));  /* reduced from 250px to 200px */
-    gap: 0.8rem;  /* reduced from 1rem for even tighter spacing */
+    grid-template-columns: repeat(3, 1fr);  /* erzwingt 3 Spalten */
+    gap: 1rem;
     margin-top: 2rem;
 }
 
