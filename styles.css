@@ -385,19 +385,20 @@ contact-info li {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1rem;  /* reduced from 2rem to 1rem for tighter spacing */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));  /* reduced from 250px to 200px */
+    gap: 0.8rem;  /* reduced from 1rem for even tighter spacing */
     margin-top: 2rem;
 }
 
 .project-card {
     background: var(--text-bg);
-    padding: 1.5rem;  /* reduced from 2rem */
+    padding: 1rem;  /* reduced from 1.5rem */
     border-radius: 8px;
     box-shadow: 0 0 20px var(--text-glow);
     backdrop-filter: blur(10px);
     border: 1px solid var(--cyber-blue);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-size: 0.9em;  /* slightly smaller text */
 }
 
 .project-card:hover {
@@ -408,8 +409,8 @@ contact-info li {
 .project-card h2 {
     color: var(--bright-yellow);
     text-shadow: 0 0 10px var(--bright-yellow);
-    margin-bottom: 1rem;
-    font-size: 1.8em;
+    margin-bottom: 0.8rem;  /* reduced from 1rem */
+    font-size: 1.4em;  /* reduced from 1.8em */
 }
 
 .project-content p {
