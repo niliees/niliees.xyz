@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let matrixCanvas = null;
     let matrixInterval = null;
 
-    // Function to setup matrix effect
+    // Initialize the Matrix effect
     function setupMatrixEffect() {
         const canvas = document.createElement('canvas');
         canvas.id = 'matrix-bg';
@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
             interval: setInterval(() => {
                 ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
                 ctx.fillRect(0, 0, width, height);
-                
                 ctx.fillStyle = '#0f0';
                 ctx.font = '15pt monospace';
                 
@@ -38,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // Function to cleanup matrix effect
+    // Cleanup Matrix effect
     function cleanupMatrixEffect() {
         if (matrixInterval) {
             clearInterval(matrixInterval);
@@ -50,31 +49,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Function to apply style
-    function applyStyle(styleName) {
-        const stylesheet = document.querySelector('link[rel="stylesheet"]');
+    // Apply style with proper initialization and cleanup
+    function applyStyle(styleName, updateStorage = true) {
+        const currentStyle = localStorage.getItem('selectedStyle');
         
-        switch(styleName) {
-            case 'matrix':
+        // Only proceed if we're actually changing styles
+        if (currentStyle !== styleName || !currentStyle) {
+            const stylesheet = document.querySelector('link[rel="stylesheet"]');
+            
+            // Clean up existing effects first
+            cleanupMatrixEffect();
+
+            if (styleName === 'matrix') {
                 stylesheet.href = 'styles.css';
                 const matrix = setupMatrixEffect();
                 matrixCanvas = matrix.canvas;
                 matrixInterval = matrix.interval;
-                localStorage.setItem('selectedStyle', 'matrix');
-                break;
-                
-            case 'modern':
+            } else if (styleName === 'modern') {
                 stylesheet.href = 'style2.css';
-                cleanupMatrixEffect();
-                localStorage.setItem('selectedStyle', 'modern');
-                break;
-                
-            default:
-                console.warn('Invalid style:', styleName);
+            }
+
+            // Update storage if needed
+            if (updateStorage) {
+                localStorage.setItem('selectedStyle', styleName);
+            }
         }
     }
 
-    // Function to handle style code input
+    // Handle code input
     function handleStyleSwitch(code) {
         switch(code) {
             case '#0001':
@@ -85,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             default:
                 alert('Invalid code!');
+                return;
         }
     }
 
@@ -109,18 +112,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Apply stored style on page load
-    const storedStyle = localStorage.getItem('selectedStyle');
-    if (storedStyle) {
-        applyStyle(storedStyle);
-    } else if (document.querySelector('link[rel="stylesheet"]').href.includes('styles.css')) {
-        // Initialize matrix effect if no stored style and currently using matrix style
+    // Initialize correct style on page load
+    const preferredStyle = localStorage.getItem('selectedStyle') || 'matrix';
+    const currentHref = document.querySelector('link[rel="stylesheet"]').href;
+
+    // Check if current style matches stored preference
+    const shouldBeMatrix = preferredStyle === 'matrix' && !currentHref.includes('style2.css');
+    const shouldBeModern = preferredStyle === 'modern' && currentHref.includes('style2.css');
+
+    if (!shouldBeMatrix && !shouldBeModern) {
+        applyStyle(preferredStyle, false);
+    } else if (preferredStyle === 'matrix' && !matrixCanvas) {
         const matrix = setupMatrixEffect();
         matrixCanvas = matrix.canvas;
         matrixInterval = matrix.interval;
     }
 
-    // Handle window resize for matrix effect
+    // Handle window resize
     window.addEventListener('resize', () => {
         if (matrixCanvas) {
             cleanupMatrixEffect();
