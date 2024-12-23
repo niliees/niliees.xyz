@@ -1,10 +1,10 @@
 :root {
-    --primary-color: #00ff41;
-    --secondary-color: #39ff14;
-    --background-color: #000000;
-    --text-color: #ffffff;
-    --glow-color: rgba(0, 255, 65, 0.5);
-    --font-main: 'Source Code Pro', monospace;
+    --primary-color: #0f0;
+    --text-color: #0f0;
+    --background-color: #000;
+    --glow-color: rgba(0, 255, 0, 0.2);
+    --font-main: 'VT323', monospace;
+    --scanline-color: rgba(0, 255, 0, 0.1);
 }
 
 * {
@@ -17,161 +17,90 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     font-family: var(--font-main);
-    line-height: 1.6;
-    overflow-x: hidden;
+    font-size: 18px;
+    line-height: 1.4;
+    text-shadow: 0 0 5px var(--glow-color);
+    position: relative;
 }
 
+/* CRT screen effect */
 body::before {
-    content: '';
+    content: "";
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: linear-gradient(
-        rgba(0, 0, 0, 0.97),
-        rgba(0, 0, 0, 0.95)
+        transparent 50%, 
+        rgba(0, 255, 0, 0.02) 50%
     );
-    z-index: -1;
+    background-size: 100% 4px;
+    z-index: 1000;
+    pointer-events: none;
+    animation: scanlines 10s linear infinite;
 }
 
 nav {
-    background: rgba(0, 0, 0, 0.95);
+    background: transparent;
     padding: 1rem;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 100;
-    border-bottom: 1px solid var(--primary-color);
-    box-shadow: 0 0 10px var(--glow-color);
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
+    border: none;
+    box-shadow: none;
 }
 
 nav ul li a {
-    color: var(--primary-color);
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 0.9em;
-    transition: all 0.3s ease;
+    color: var(--text-color);
+    font-size: 1.2em;
+    text-shadow: 0 0 5px var(--glow-color);
+    position: relative;
 }
 
-nav ul li a:hover {
-    color: var(--secondary-color);
-    text-shadow: 0 0 5px var(--glow-color);
+nav ul li a::before {
+    content: ">";
+    position: absolute;
+    left: -20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+nav ul li a:hover::before {
+    opacity: 1;
 }
 
 main {
-    margin-top: 80px;
+    max-width: 800px;
+    margin: 0 auto;
     padding: 2rem;
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 h1, h2, h3 {
-    color: var(--primary-color);
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    margin-bottom: 1.5rem;
-    text-shadow: 0 0 5px var(--glow-color);
+    font-family: var(--font-main);
+    color: var(--text-color);
+    text-transform: none;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
 }
 
 .hero {
-    padding: 4rem 2rem;
-    text-align: center;
-    border: 1px solid var(--primary-color);
-    background: rgba(0, 0, 0, 0.8);
-    margin-bottom: 3rem;
-    box-shadow: 0 0 15px var(--glow-color);
-}
-
-.features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    text-align: left;
     padding: 2rem 0;
 }
 
 .feature {
-    padding: 2rem;
-    background: rgba(0, 0, 0, 0.8);
-    border: 1px solid var(--primary-color);
-    box-shadow: 0 0 10px var(--glow-color);
-    transition: all 0.3s ease;
-}
-
-.feature:hover {
-    box-shadow: 0 0 15px var(--glow-color);
-}
-
-button {
     background: transparent;
-    color: var(--primary-color);
-    border: 1px solid var(--primary-color);
-    padding: 0.8rem 2rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    border: none;
+    box-shadow: none;
+    padding: 1rem 0;
 }
 
-button:hover {
-    background: var(--primary-color);
-    color: var(--background-color);
-    box-shadow: 0 0 10px var(--glow-color);
-}
-
-input, textarea, select {
-    width: 100%;
-    padding: 0.8rem;
-    margin-bottom: 1rem;
-    background: rgba(0, 0, 0, 0.8);
-    border: 1px solid var(--primary-color);
-    color: var(--primary-color);
+button, input, textarea {
     font-family: var(--font-main);
-}
-
-input:focus, textarea:focus, select:focus {
-    outline: none;
-    box-shadow: 0 0 10px var(--glow-color);
-    border-color: var(--secondary-color);
-}
-
-.project-card {
-    background: rgba(0, 0, 0, 0.8);
-    padding: 2rem;
-    border: 1px solid var(--primary-color);
-    margin-bottom: 2rem;
-    box-shadow: 0 0 10px var(--glow-color);
-}
-
-footer {
-    margin-top: 4rem;
-    padding: 2rem;
-    text-align: center;
-    border-top: 1px solid var(--primary-color);
-    background: rgba(0, 0, 0, 0.95);
-}
-
-@media (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .hero {
-        padding: 2rem 1rem;
-    }
-
-    .features {
-        grid-template-columns: 1fr;
-    }
+    background: transparent;
+    color: var(--text-);
+    border: none;
+    box-shadow: none;
+    text-shadow: 0 0 5px var(--glow-color);
 }
