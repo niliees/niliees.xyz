@@ -1,127 +1,170 @@
-// Feature management class
-class FeatureManager {
+// Feature Management System
+class StyleBasedFeatureManager {
     constructor() {
-        this.matrixInterval = null;
-        this.activeFeatures = new Set();
+        // Core configuration
+        this.config = {
+            matrixStyles: 'styles.css',
+            modernStyles: 'style2.css'
+        };
+        
+        // State management
+        this.state = {
+            matrixInterval: null,
+            activeFeatures: new Set(),
+            dimensions: {
+                width: window.innerWidth,
+                height: window.innerHeight
+            }
+        };
+
         this.initialize();
     }
 
     initialize() {
-        // Initial setup based on current stylesheet
-        if (this.isMatrixStyleActive()) {
-            this.enableMatrixEffect();
+        this.detectInitialStyle();
+        this.bindEventListeners();
+    }
+
+    detectInitialStyle() {
+        const currentStyle = this.getCurrentStylesheet();
+        if (currentStyle?.includes(this.config.matrixStyles)) {
+            this.initializeMatrixEffect();
         }
-        this.setupEventListeners();
     }
 
-    isMatrixStyleActive() {
-        const styleSheet = document.querySelector('link[rel="stylesheet"]');
-        return styleSheet && styleSheet.href.includes('styles.css');
+    getCurrentStylesheet() {
+        return document.querySelector('link[rel="stylesheet"]')?.href;
     }
 
-    setupEventListeners() {
-        // Contact form handling
+    bindEventListeners() {
+        // Style switching
+        const styleButton = document.querySelector('.code-submit');
+        if (styleButton) {
+            styleButton.addEventListener('click', () => this.handleStyleSwitch());
+        }
+
+        // Form handling
         const contactForm = document.getElementById('contactForm');
         if (contactForm) {
-            contactForm.addEventListener('submit', this.handleContactSubmit.bind(this));
+            contactForm.addEventListener('submit', (e) => this.handleFormSubmit(e));
         }
 
-        // Style switcher
-        const codeSubmit = document.querySelector('.code-submit');
-        if (codeSubmit) {
-            codeSubmit.addEventListener('click', this.handleStyleChange.bind(this));
-        }
-
-        // Resize handling for matrix effect
-        window.addEventListener('resize', this.handleResize.bind(this));
+        // Responsive handling
+        window.addEventListener('resize', () => this.handleResize());
     }
 
-    handleContactSubmit(e) {
-        e.preventDefault();
-        alert('Vielen Dank für Ihre Nachricht!');
-        e.target.reset();
-    }
-
-    handleStyleChange() {
+    handleStyleSwitch() {
         const codeInput = document.querySelector('.code-input');
-        const code = codeInput?.value.trim();
-        const styleSheet = document.querySelector('link[rel="stylesheet"]');
+        const styleCode = codeInput?.value.trim();
+        const stylesheet = document.querySelector('link[rel="stylesheet"]');
 
-        switch(code) {
+        switch (styleCode) {
             case '#0001':
-                styleSheet.href = 'styles.css';
-                this.enableMatrixEffect();
+                stylesheet.href = this.config.matrixStyles;
+                this.initializeMatrixEffect();
                 break;
             case '#0002':
-                styleSheet.href = 'style2.css';
-                this.disableMatrixEffect();
+                stylesheet.href = this.config.modernStyles;
+                this.cleanupMatrixEffect();
                 break;
             default:
+                console.warn('Invalid style code provided');
                 alert('Invalid code!');
         }
     }
 
-    enableMatrixEffect() {
-        if (this.activeFeatures.has('matrix')) return;
+    initializeMatrixEffect() {
+        if (this.state.activeFeatures.has('matrix')) return;
 
         const canvas = document.createElement('canvas');
         canvas.id = 'matrix-bg';
         document.body.prepend(canvas);
 
         const ctx = canvas.getContext('2d');
-        this.setupCanvas(ctx, canvas);
-        this.matrixInterval = setInterval(() => this.renderMatrix(ctx), 50);
-        this.activeFeatures.add('matrix');
+        this.setupMatrixCanvas(canvas, ctx);
+        this.state.matrixInterval = setInterval(() => this.renderMatrixFrame(ctx), 50);
+        this.state.activeFeatures.add('matrix');
     }
 
-    setupCanvas(ctx, canvas) {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        this.cols = Math.floor(canvas.width / 20);
-        this.ypos = Array(this.cols).fill(0);
-        
+    setupMatrixCanvas(canvas, ctx) {
+        canvas.width = this.state.dimensions.width;
+        canvas.height = this.state.dimensions.height;
+
+        this.state.matrixColumns = Math.floor(canvas.width / 20);
+        this.state.columnPositions = Array(this.state.matrixColumns).fill(0);
+
+        // Initial canvas state
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
-    renderMatrix(ctx) {
+    renderMatrixFrame(ctx) {
+        // Semi-transparent fade effect
         ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-        
+
+        // Matrix rain rendering
         ctx.fillStyle = '#0f0';
         ctx.font = '15pt monospace';
-        
-        this.ypos.forEach((y, ind) => {
-            const text = String.fromCharCode(Math.random() * 128);
-            const x = ind * 20;
-            ctx.fillText(text, x, y);
+
+        this.state.columnPositions.forEach((y, index) => {
+            // Generate random character
+            const char = String.fromCharCode(Math.random() * 128);
+            const x = index * 20;
+            
+            // Draw character
+            ctx.fillText(char, x, y);
+            
+            // Update position with wraparound
             if (y > 100 + Math.random() * 10000) {
-                this.ypos[ind] = 0;
+                this.state.columnPositions[index] = 0;
             } else {
-                this.ypos[ind] = y + 20;
+                this.state.columnPositions[index] = y + 20;
             }
         });
     }
 
     handleResize() {
+        // Update dimensions
+        this.state.dimensions = {
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
+
+        // Update matrix effect if active
         const canvas = document.getElementById('matrix-bg');
-        if (canvas) {
+        if (canvas && this.state.activeFeatures.has('matrix')) {
             const ctx = canvas.getContext('2d');
-            this.setupCanvas(ctx, canvas);
+            this.setupMatrixCanvas(canvas, ctx);
         }
     }
 
-    disableMatrixEffect() {
-        if (!this.activeFeatures.has('matrix')) return;
+    handleFormSubmit(event) {
+        event.preventDefault();
+        alert('Vielen Dank für Ihre Nachricht!');
+        event.target.reset();
+    }
 
-        clearInterval(this.matrixInterval);
+    cleanupMatrixEffect() {
+        if (!this.state.activeFeatures.has('matrix')) return;
+
+        // Clear interval
+        if (this.state.matrixInterval) {
+            clearInterval(this.state.matrixInterval);
+            this.state.matrixInterval = null;
+        }
+
+        // Remove canvas
         const canvas = document.getElementById('matrix-bg');
-        canvas?.remove();
-        this.activeFeatures.delete('matrix');
+        if (canvas) {
+            canvas.remove();
+        }
+
+        this.state.activeFeatures.delete('matrix');
     }
 }
 
-// Initialize features when DOM is ready
+// Initialize the feature manager when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    new FeatureManager();
+    new StyleBasedFeatureManager();
 });
