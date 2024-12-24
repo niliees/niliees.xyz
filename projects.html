@@ -75,13 +75,17 @@
                 <h2>Chrome Dino Cheat</h2>
                 <div class="project-content">
                     <ul class="project-details">
-                        <li><button onclick="copyText()">Kopieren</button>
-                                <script>
-                                function copyText() {
-                            const text = Runner.instance_.gameOver=function(){};
-                            navigator.clipboard.writeText(text)
-                            }
-                            </script></li>
+                        <li><button onclick="copyText2()">Kopieren (Methode 2)</button>
+<p id="textToCopy2" style="display: none;">Dieser ausgeblendete Text wird kopiert</p>
+
+<script>
+function copyText2() {
+    const text = document.getElementById('textToCopy2').innerText;
+    navigator.clipboard.writeText(text)
+        .then(() => alert('Text kopiert!'))
+        .catch(err => console.error('Fehler beim Kopieren:', err));
+}
+</script></li>
                         <li><span class="label">Platform:</span> Windows (Batch)</li>
                         <li><span class="label">Features:</span> Troll deine Freunde das du cheatest</li>
                         <li><span class="label">Premium Code:</span> uno/8888:8080</li>
