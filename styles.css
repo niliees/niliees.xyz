@@ -388,8 +388,8 @@ contact-info li {
     grid-template-columns: repeat(3, 1fr);  /* erzwingt 3 Spalten */
     gap: 1rem;
     margin-top: 2rem;
+    margin-bottom: 5rem; /* Added space above footer */
 }
-
 .project-card {
     background: var(--text-bg);
     padding: 1rem;  /* reduced from 1.5rem */
