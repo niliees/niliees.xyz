@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Niliees Gaming Profile - Fortnite Settings, Social Media und mehr">
+    <meta name="keywords" content="Niliees, Gaming, Fortnite, Settings, Social Media">
+    <title>nsce.fr</title>
+    <link href="https://cdn.nsce.fr/main.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4c1d95;
+            --secondary-color: #1e40af;
+            --accent-color: #5b21b6;
+        }
+
+        body {
+            background: radial-gradient(circle at 50% 40%,
+                var(--primary-color) 0%,
+                var(--secondary-color) 30%,
+                var(--accent-color) 45%,
+                #7c2d12 60%,
+                #fbbf24 75%,
+                #020617 100%
+            );
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .hover-scale {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .mobile-nav {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-nav {
+                display: block;
+                position: fixed;
+                top: 0;
+                width: 100%;
+                z-index: 1000;
+                background: rgba(17, 24, 39, 0.95);
+                backdrop-filter: blur(5px);
+            }
+
+            .container {
+                padding-top: 70px;
+            }
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+            z-index: 999;
+        }
+
+        .scroll-top:hover {
+            background: var(--accent-color);
+        }
+
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+        }
+
+        .nav-link {
+            position: relative;
+            color: white;
+            text-decoration: none;
+            padding: 5px 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #60a5fa;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .settings-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .settings-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+    </head>
+    <body class="text-white">
+    
+        <!-- Mobile Navigation -->
+        <nav class="mobile-nav">
+            <div class="flex justify-between items-center p-4">
+                <h1 class="text-xl font-bold">Niliees</h1>
+                <button id="menuToggle" class="text-white p-2 hover:bg-gray-700 rounded">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div id="mobileMenu" class="hidden px-4 pb-4">
+                <a href="#watching" class="nav-link block py-2">Watching</a>
+                <a href="#gaming" class="nav-link block py-2">Gaming</a>
+                <a href="#social" class="nav-link block py-2">Social</a>
+                <a href="#fortnite-settings" class="nav-link block py-2">Fortnite Settings</a>
+            </div>
+        </nav>
+    
+        <div class="container mx-auto px-4 py-8 max-w-4xl">
+            <!-- Profilbereich -->
+            <div class="bg-gray-800 bg-opacity-50 rounded-lg shadow-xl p-6 mb-6 hover-scale fade-in">
+                <div class="flex flex-col items-center">
+                    <img src="/data/pfp.png" alt="Profilbild" class="rounded-full mb-4 w-32 h-32 object-cover" loading="lazy">
+                    <h1 class="text-2xl font-bold mb-2">Niliees</h1>
+                    <p class="text-gray-400 text-center mb-4">byNiliees</p>
+                    
+                    <!-- Language Toggle -->
+                    <div class="flex space-x-4 mt-4">
+                        <button class="px-3 py-1 bg-blue-600 rounded active" onclick="toggleLanguage('de')">DE</button>
+                        <button class="px-3 py-1 bg-gray-600 rounded" onclick="toggleLanguage('en')">EN</button>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Social Media Section -->
+            <div id="social" class="bg-gray-800 bg-opacity-50 rounded-lg shadow-xl p-6 mb-6 hover-scale fade-in">
+                <h2 class="text-xl font-bold mb-4">Social</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Instagram -->
+                    <div class="social-icon flex items-center p-4 bg-gray-700 bg-opacity-50 rounded-lg hover:bg-opacity-70 transition-all duration-300">
+                        <div class="p-2 bg-gradient-to-br from-purple-600 to-pink-500 rounded-lg">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </div>
+                        <div class="ml-3">
+                            <span class="font-medium text-white">Instagram:</span>
+                            <a href="https://instagram.com/niliees" target="_blank" rel="noopener noreferrer" 
+                               class="ml-2 text-gray-300 hover:text-white transition-colors duration-300">niliees</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Twitter/X -->
+                    <div class="social-icon flex items-center p-4 bg-gray-700 bg-opacity-50 rounded-lg hover:bg-opacity-70 transition-all duration-300">
+                        <div class="p-2 bg-black rounded-lg">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </div>
+                        <div class="ml-3">
+                            <span class="font-medium text-white">Twitter(X):</span>
+                            <a href="https://twitter.com/niliees" target="_blank" rel="noopener noreferrer" 
+                               class="ml-2 text-gray-300 hover:text-white transition-colors duration-300">niliees</a>
+                        </div>
+                    </div>
+                    
+                    <!-- RedNote -->
+                    <div class="social-icon flex items-center p-4 bg-gray-700 bg-opacity-50 rounded-lg hover:bg-opacity-70 transition-all duration-300">
+                        <div class="p-2 bg-red-600 rounded-lg">
+                            <i class="fas fa-book text-xl"></i>
+                        </div>
+                        <div class="ml-3">
+                            <span class="font-medium text-white">RedNote(小红书):</span>
+                            <a href="https://xiaohongshu.com/niliees" target="_blank" rel="noopener noreferrer" 
+                               class="ml-2 text-gray-300 hover:text-white transition-colors duration-300">niliees</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Gaming Profile -->
+            <div id="gaming" class="bg-gray-800 bg-opacity-50 rounded-lg shadow-xl p-6 mb-6 hover-scale fade-in">
+                <h2 class="text-xl font-bold mb-4">Gaming Profile</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-center p-3 bg-gray-700 bg-opacity-50 rounded-lg hover:bg-opacity-70 transition-all duration-300">
+                        <span class="font-medium">Discord:</span>
+                        <span class="ml-2 text-gray-300">niliees</span>
+                    </div>
+                    <div class="flex items-center p-3 bg-gray-700 bg-opacity-50 rounded-lg hover:bg-opacity-70 transition-all duration-300">
+                        <span class="font-medium">Steam:</span>
+                        <span class="ml-2 text-gray-300">氮 | niliees</span>
+                    </div>
+                    <div class="flex items-center p-3 bg-gray-700 bg-opacity-50 rounded-lg hover:bg-opacity-70 transition-all duration-300">
+                        <span class="font-medium">Epic Games:</span>
+                        <span class="ml-2 text-gray-300">byNiliees</span>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Fortnite Settings -->
+            <div id="fortnite-settings" class="bg-gray-800 bg-opacity-50 rounded-lg shadow-xl p-6 hover-scale fade-in">
+                <h2 class="text-xl font-bold mb-4">Meine Fortnite Settings</h2>
+                <div class="grid grid-cols-1 gap-6">
+                    <!-- Maus Settings -->
+                    <div class="settings-card bg-gray-700 bg-opacity-50 rounded-lg p-4" onclick="showProject('maus-settings')">
+                        <h3 class="font-bold mb-2 text-blue-400">Maus Settings</h3>
+                        <p class="text-gray-300">Meine Maus-Einstellungen für Fortnite</p>
+                        <span class="text-blue-400 text-sm mt-2 block">Mehr erfahren →</span>
+                    </div>
+    
+                    <!-- Grafikeinstellungen -->
+                    <div class="settings-card bg-gray-700 bg-opacity-50 rounded-lg p-4" onclick="showProject('grafik-settings')">
+                        <h3 class="font-bold mb-2 text-blue-400">Grafikeinstellungen</h3>
+                        <p class="text-gray-300">Meine optimalen Grafikeinstellungen für beste Performance</p>
+                        <span class="text-blue-400 text-sm mt-2 block">Mehr erfahren →</span>
+                    </div>
+    
+                    <!-- Keybinds -->
+                    <div class="settings-card bg-gray-700 bg-opacity-50 rounded-lg p-4" onclick="showProject('keybinds')">
+                        <h3 class="font-bold mb-2 text-blue-400">Keybinds</h3>
+                        <p class="text-gray-300">Meine Tastenbelegung für schnelles Bauen und Editieren</p>
+                        <span class="text-blue-400 text-sm mt-2 block">Mehr erfahren →</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Detail Pages -->
+        <div id="maus-settings" class="hidden fixed inset-0 bg-gray-900 bg-opacity-95 overflow-y-auto z-50">
+            <div class="container mx-auto px-4 py-8 max-w-4xl">
+                <div class="bg-gray-800 bg-opacity-50 rounded-lg shadow-xl p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold">Maus Settings</h2>
+                        <button onclick="hideProject('maus-settings')" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-6">
+                        <img src="/data/mous-settings.png" alt="Maus Settings Screenshot" class="rounded-lg w-full">
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Meine Maus-Einstellungen</h3>
+                            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                                <li>DPI: 1000</li>
+                                <li>X-Achsen-Empfindlichkeit: 7.8%</li>
+                                <li>Y-Achsen-Empfindlichkeit: 7.8%</li>
+                                <li>Targeting-Empfindlichkeit: 100%</li>
+                                <li>Scope-Empfindlichkeit: 100%</li>
+                                <li>Building Sensitivity: 110%</li>
+                                <li>Editing Sensitivity: 115%</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div id="grafik-settings" class="hidden fixed inset-0 bg-gray-900 bg-opacity-95 overflow-y-auto z-50">
+            <div class="container mx-auto px-4 py-8 max-w-4xl">
+                <div class="bg-gray-800 bg-opacity-50 rounded-lg shadow-xl p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold">Grafikeinstellungen</h2>
+                        <button onclick="hideProject('grafik-settings')" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-6">
+                        <img src="/data/Graphic-1.png" alt="Grafik Settings Screenshot" class="rounded-lg w-full">
+                        <img src="/data/Graphic-2.png" alt="Grafik Settings Screenshot" class="rounded-lg w-full">
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Meine Grafikeinstellungen</h3>
+                            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                                <li>Window Mode: Windowed Fullscreen</li>
+                                <li>Vsync: Aus</li>
+                                <li>Frame Rate Limit: 240</li>
+                                <li>Rendering Mode: Performance</li>
+                                <li>Brightness: 100%</li>
+                                <li>Color Blind Mode: Tritanope</li>
+                                <li>Color Blind Strength: 10</li>
+                                <li>3D Resolution: 75%</li>
+                                <li>View Distance: near</li>
+                                <li>Textures: Low</li>
+                                <li>Meshes: Low</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div id="keybinds" class="hidden fixed inset-0 bg-gray-900 bg-opacity-95 overflow-y-auto z-50">
+            <div class="container mx-auto px-4 py-8 max-w-4xl">
+                <div class="bg-gray-800 bg-opacity-50 rounded-lg shadow-xl p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold">Keybinds</h2>
+                        <button onclick="hideProject('keybinds')" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-6">
+                        <img src="/data/Key-1.png" alt="Keybinds Screenshot" class="rounded-lg w-full">
+                        <img src="/data/Key-2.png" alt="Keybinds Screenshot" class="rounded-lg w-full">
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Meine Tastenbelegung</h3>
+                            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                                <li>Wand: F</li>
+                                <li>Boden: Maus-5</li>
+                                <li>Stair: Maus-4</li>
+                                <li>Dach: C</li>
+                                <li>Editieren: E</li>
+                                <li>Reset: Rechte Maustaste</li>
+                                <li>Bestätigen: (Automatisch)</li>
+                            <li>Inventar: Tab</li>
+                            <li>Hocken: Left-Ctrl</li>
+                            <li>Pump: Q</li>
+                            <li>AR: 4</li>
+                            <li>Pickaxe: V</li>
+                            <li>Use: Mausrad hoch</li>
+                            <li>Presets:</li>
+                            <img src="/data/presets.png" alt="Keybinds Screenshot" class="rounded-lg w-full">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" class="scroll-top" aria-label="Nach oben scrollen">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        let darkMode = true;
+
+        themeToggle.addEventListener('click', () => {
+            darkMode = !darkMode;
+            body.style.background = darkMode ? 
+                'radial-gradient(circle at 50% 40%, #4c1d95 0%, #1e40af 30%, #5b21b6 45%, #7c2d12 60%, #fbbf24 75%, #020617 100%)' :
+                'radial-gradient(circle at 50% 40%, #818cf8 0%, #60a5fa 30%, #818cf8 45%, #f59e0b 60%, #fbbf24 75%, #e5e7eb 100%)';
+            themeToggle.innerHTML = darkMode ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Scroll to Top Button
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        
+        window.onscroll = () => {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollTopBtn.style.display = "flex";
+            } else {
+                scrollTopBtn.style.display = "none";
+            }
+        };
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Project Display Functions
+        function showProject(projectId) {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.classList.remove('hidden');
+
+            setTimeout(() => {
+                document.getElementById(projectId).classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                loadingOverlay.classList.add('hidden');
+            }, 500);
+        }
+
+        function hideProject(projectId) {
+            document.getElementById(projectId).classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+
+        // Lazy Loading für Bilder
+        document.addEventListener("DOMContentLoaded", () => {
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            observer.unobserve(img);
+                        }
+                    }
+                });
+            });
+
+            images.forEach(img => imageObserver.observe(img));
+        });
+
+        // Animation für neue Elemente
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.hover-scale');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            });
+
+            elements.forEach(element => observer.observe(element));
+        }
+
+        // Initialisierung
+        document.addEventListener('DOMContentLoaded', () => {
+            animateOnScroll();
+        });
+    </script>
+</body>
+</html>
