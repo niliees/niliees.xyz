@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ich liebe dich Nevin</title>
     <style>
         body {
@@ -106,6 +107,85 @@
             50% { transform: translateY(-20px) rotate(-45deg); }
             100% { transform: translateY(0) rotate(-45deg); }
         }
+
+        /* Mobile Styles */
+        @media screen and (max-width: 768px) {
+            .main-heart {
+                width: 200px;
+                height: 200px;
+                transform: scale(0.8);
+            }
+
+            .heart {
+                width: 200px;
+                height: 200px;
+            }
+
+            .heart:before,
+            .heart:after {
+                width: 200px;
+                height: 200px;
+            }
+
+            .heart:before {
+                top: -100px;
+            }
+
+            .heart:after {
+                left: 100px;
+            }
+
+            .text {
+                font-size: 1.8em;
+            }
+
+            .small-heart {
+                width: 20px;
+                height: 20px;
+            }
+
+            .small-heart:before,
+            .small-heart:after {
+                width: 20px;
+                height: 20px;
+            }
+
+            .small-heart:before {
+                top: -10px;
+            }
+
+            .small-heart:after {
+                left: 10px;
+            }
+        }
+
+        /* Sehr kleine Bildschirme */
+        @media screen and (max-width: 380px) {
+            .main-heart {
+                transform: scale(0.6);
+            }
+
+            .text {
+                font-size: 1.5em;
+            }
+        }
+
+        /* Landscape Mode Prevention */
+        @media screen and (max-height: 500px) and (orientation: landscape) {
+            body::before {
+                content: "Bitte drehe dein Handy in die vertikale Position für die beste Ansicht ♥";
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0, 0, 0, 0.9);
+                color: white;
+                padding: 20px;
+                text-align: center;
+                width: 100%;
+                z-index: 1000;
+            }
+        }
     </style>
 </head>
 <body>
@@ -118,17 +198,33 @@
         function createSmallHeart() {
             const heart = document.createElement('div');
             heart.className = 'small-heart';
-            heart.style.left = Math.random() * window.innerWidth + 'px';
+            
+            // Anpassung der Position basierend auf der Bildschirmgröße
+            const screenWidth = window.innerWidth;
+            heart.style.left = Math.random() * screenWidth + 'px';
             heart.style.top = window.innerHeight + 'px';
+            
+            // Zufällige Animation-Verzögerung
             heart.style.animationDelay = Math.random() * 2 + 's';
+            
             document.body.appendChild(heart);
 
+            // Entfernen des Herzens nach Animation
             setTimeout(() => {
                 heart.remove();
             }, 3000);
         }
 
-        setInterval(createSmallHeart, 300);
+        // Anpassung der Herz-Generierungsrate basierend auf der Bildschirmgröße
+        const heartGenerationInterval = window.innerWidth <= 768 ? 500 : 300;
+        setInterval(createSmallHeart, heartGenerationInterval);
+
+        // Event Listener für Bildschirmgrößenänderungen
+        window.addEventListener('resize', () => {
+            // Entfernen aller bestehenden kleinen Herzen bei Größenänderung
+            const smallHearts = document.querySelectorAll('.small-heart');
+            smallHearts.forEach(heart => heart.remove());
+        });
     </script>
 </body>
 </html>
