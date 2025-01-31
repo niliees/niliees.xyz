@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Ich liebe dich Nevin</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .main-heart {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            animation: pulse 1.5s ease infinite;
+        }
+
+        .heart {
+            background-color: red;
+            display: inline-block;
+            height: 300px;
+            position: relative;
+            width: 300px;
+            transform: rotate(-45deg);
+        }
+
+        .heart:before,
+        .heart:after {
+            content: "";
+            background-color: red;
+            border-radius: 50%;
+            height: 300px;
+            position: absolute;
+            width: 300px;
+        }
+
+        .heart:before {
+            top: -150px;
+            left: 0;
+        }
+
+        .heart:after {
+            left: 150px;
+            top: 0;
+        }
+
+        .text {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 2.5em;
+            font-family: Arial, sans-serif;
+            z-index: 1;
+            transform: rotate(0deg);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .small-heart {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: pink;
+            transform: rotate(-45deg);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .small-heart:before,
+        .small-heart:after {
+            content: "";
+            background-color: pink;
+            border-radius: 50%;
+            height: 30px;
+            position: absolute;
+            width: 30px;
+        }
+
+        .small-heart:before {
+            top: -15px;
+            left: 0;
+        }
+
+        .small-heart:after {
+            left: 15px;
+            top: 0;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(-45deg); }
+            50% { transform: translateY(-20px) rotate(-45deg); }
+            100% { transform: translateY(0) rotate(-45deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-heart">
+        <div class="heart"></div>
+        <div class="text">Ich liebe dich<br>Nevin</div>
+    </div>
+
+    <script>
+        function createSmallHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'small-heart';
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.top = window.innerHeight + 'px';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 3000);
+        }
+
+        setInterval(createSmallHeart, 300);
+    </script>
+</body>
+</html>
